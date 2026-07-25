@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MindFlip AAA</string>
+    <string name="admob_app_id">ca-app-pub-1412575396954796~5215774983</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="rewarded_ad_unit_id">ca-app-pub-3940256099942544/5224354917</string>
+    <string name="interstitial_ad_unit_id">ca-app-pub-1412575396954796/8963448308</string>
+</resources>
