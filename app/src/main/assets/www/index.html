@@ -12,7 +12,8 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW reg error:', err));
+          navigator.serviceWorker.register(new URL('./sw.js', window.location.href).toString())
+          .catch(err => console.warn('MindFlip offline cache unavailable:', err));
         });
       }
     </script>
