@@ -15,13 +15,15 @@ class WebAppInterface(private val context: Context, private val activity: MainAc
 
     @JavascriptInterface
     fun triggerVibrate(milliseconds: Long) {
+        val duration = milliseconds.coerceIn(0L, 1000L)
+        if (duration == 0L) return
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
         if (vibrator != null && vibrator.hasVibrator()) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE))
+                vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE))
             } else {
                 @Suppress("DEPRECATION")
-                vibrator.vibrate(milliseconds)
+                vibrator.vibrate(duration)
             }
         }
     }
@@ -37,6 +39,13 @@ class WebAppInterface(private val context: Context, private val activity: MainAc
     fun launchBillingFlow() {
         activity.runOnUiThread {
             activity.purchasePremium()
+        }
+    }
+
+    @JavascriptInterface
+    fun restorePurchases() {
+        activity.runOnUiThread {
+            activity.restorePurchases()
         }
     }
 }
