@@ -13,7 +13,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.webkit.WebViewAssetLoader
 import com.google.android.gms.ads.AdRequest
@@ -28,7 +27,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
-    private val viewModel: MainViewModel by viewModels()
 
     private var interstitialAd: InterstitialAd? = null
     private var rewardedAd: RewardedAd? = null
