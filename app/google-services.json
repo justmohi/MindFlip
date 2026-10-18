@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "694930784054",
-    "project_id": "ai-studio-applet-webapp-8c294",
-    "storage_bucket": "ai-studio-applet-webapp-8c294.appspot.com"
+    "project_number": "1049740305565",
+    "project_id": "mindflip-a59a4",
+    "storage_bucket": "mindflip-a59a4.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:694930784054:android:9d95803a45bc49c5aa068f",
+        "mobilesdk_app_id": "1:1049740305565:android:895140427a6c40b1f0e074",
         "android_client_info": {
           "package_name": "com.mindflip.memorygame"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSy_Placeholder_Android_Key_AIStudio"
+          "current_key": "AIzaSyC8Z622VgbDwv3ugDxQ7cqWI3RZQWB1mLc"
         }
       ],
       "services": {
