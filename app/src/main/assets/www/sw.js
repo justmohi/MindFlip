@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mindflip-v3';
+const CACHE_NAME = 'mindflip-v4';
 
 // Keep every checked-in bundle available for offline startup. The web build
 // currently ships two JS and two CSS bundles; cache.addAll fails atomically if
@@ -6,6 +6,7 @@ const CACHE_NAME = 'mindflip-v3';
 const ASSETS = [
   './index.html',
   './manifest.json',
+  './mindflip-logo.svg',
   './assets/index-9iesdlBu.js',
   './assets/index-PmWwyyFY.js',
   './assets/index-Bt34V8sJ.css',
