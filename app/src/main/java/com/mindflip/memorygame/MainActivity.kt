@@ -2,6 +2,8 @@ package com.mindflip.memorygame
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.content.Intent
+import android.os.Build
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
@@ -11,7 +13,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.webkit.WebViewAssetLoader
 import com.google.android.gms.ads.AdRequest
@@ -26,7 +27,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
-    private val viewModel: MainViewModel by viewModels()
 
     private var interstitialAd: InterstitialAd? = null
     private var rewardedAd: RewardedAd? = null
@@ -60,13 +60,16 @@ class MainActivity : AppCompatActivity() {
         webView.settings.apply {
             javaScriptEnabled = true
             domStorageEnabled = true
-            databaseEnabled = true
-            allowFileAccess = true
-            allowContentAccess = true
+            databaseEnabled = false
+            allowFileAccess = false
+            allowContentAccess = false
             cacheMode = WebSettings.LOAD_DEFAULT
             useWideViewPort = true
             loadWithOverviewMode = true
-            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+            mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                safeBrowsingEnabled = true
+            }
         }
 
         // Add JavaScript Interface Bridge
@@ -85,7 +88,29 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                return false
+                val uri = request?.url ?: return true
+                val isTrustedLocalAsset = uri.scheme == "https" &&
+                    uri.host == "appassets.androidplatform.net" &&
+                    uri.path.orEmpty().startsWith("/assets/www/")
+
+                if (isTrustedLocalAsset) return false
+
+                if (uri.scheme == "https" || uri.scheme == "http") {
+                    return try {
+                        startActivity(Intent(Intent.ACTION_VIEW, uri))
+                        true
+                    } catch (_: Exception) {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "No app is available to open this link.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        true
+                    }
+                }
+
+                // Never let arbitrary schemes navigate the WebView that exposes the bridge.
+                return true
             }
         }
 
@@ -193,8 +218,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun purchasePremium() {
-        Toast.makeText(this, "Google Play Billing: Connecting to Play Store...", Toast.LENGTH_SHORT).show()
-        viewModel.setPremium(true)
-        webView.evaluateJavascript("window.onAndroidPremiumPurchased && window.onAndroidPremiumPurchased();", null)
+        // Never grant Premium until a real Play Billing product and verification flow exist.
+        Toast.makeText(
+            this,
+            "Premium purchases are not configured yet. No purchase was made.",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    fun restorePurchases() {
+        // Restoration must query verified Google Play purchases; never grant Premium locally.
+        Toast.makeText(
+            this,
+            "Purchase restoration is not configured yet.",
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
