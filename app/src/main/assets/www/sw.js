@@ -1,10 +1,15 @@
-const CACHE_NAME = 'mindflip-v2';
+const CACHE_NAME = 'mindflip-v3';
 
+// Keep every checked-in bundle available for offline startup. The web build
+// currently ships two JS and two CSS bundles; cache.addAll fails atomically if
+// any listed file is missing, so update this list whenever the build changes.
 const ASSETS = [
   './index.html',
   './manifest.json',
   './assets/index-9iesdlBu.js',
-  './assets/index-Bt34V8sJ.css'
+  './assets/index-PmWwyyFY.js',
+  './assets/index-Bt34V8sJ.css',
+  './assets/index-CWJS2Cq6.css'
 ].map((path) => new URL(path, self.registration.scope).toString());
 
 self.addEventListener('install', (event) => {
