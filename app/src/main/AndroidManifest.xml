@@ -19,10 +19,10 @@
         android:hardwareAccelerated="true"
         android:networkSecurityConfig="@xml/network_security_config">
 
-        <!-- AdMob App ID Meta Data (Replace with production AdMob App ID) -->
+        <!-- Configure this resource with the production AdMob app ID before release. -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-1412575396954796~5215774983"/>
+            android:value="@string/admob_app_id" />
 
         <property
             android:name="android.adservices.AD_SERVICES_CONFIG"
